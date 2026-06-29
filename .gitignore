@@ -1,0 +1,7 @@
+# BloodPressureBackend
+
+/bin/
+*.exe
+*.test
+*.out
+.env
