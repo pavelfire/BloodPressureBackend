@@ -58,7 +58,7 @@ func (h *Handler) List(w http.ResponseWriter, r *http.Request) {
 	if readings == nil {
 		readings = []Reading{}
 	}
-	httputil.WriteJSON(w, http.StatusOK, readings)
+	httputil.WriteJSON(w, http.StatusOK, readingsToJSON(readings))
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
@@ -85,7 +85,7 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 		httputil.WriteError(w, http.StatusInternalServerError, "internal server error")
 		return
 	}
-	httputil.WriteJSON(w, http.StatusOK, reading)
+	httputil.WriteJSON(w, http.StatusOK, readingToJSON(reading))
 }
 
 func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
@@ -113,7 +113,7 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 		httputil.WriteError(w, http.StatusInternalServerError, "internal server error")
 		return
 	}
-	httputil.WriteJSON(w, http.StatusCreated, reading)
+	httputil.WriteJSON(w, http.StatusCreated, readingToJSON(reading))
 }
 
 func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
@@ -171,7 +171,7 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	httputil.WriteJSON(w, http.StatusOK, reading)
+	httputil.WriteJSON(w, http.StatusOK, readingToJSON(reading))
 }
 
 func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
@@ -221,7 +221,7 @@ func (h *Handler) Sync(w http.ResponseWriter, r *http.Request) {
 		httputil.WriteError(w, http.StatusInternalServerError, "internal server error")
 		return
 	}
-	httputil.WriteJSON(w, http.StatusOK, response)
+	httputil.WriteJSON(w, http.StatusOK, syncResponseToJSON(response))
 }
 
 func parseReadingRequest(r *http.Request) (CreateInput, error) {
