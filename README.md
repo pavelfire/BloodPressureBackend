@@ -4,7 +4,7 @@ REST API для приложения BloodPressureNotes и будущего ве
 
 ## Стек
 
-- Go 1.22+ (`net/http`, без веб-фреймворков)
+- Go 1.23+ (`net/http`, без веб-фреймворков)
 - PostgreSQL
 - JWT (HMAC-SHA256, stdlib) + refresh-токены
 - bcrypt для паролей
