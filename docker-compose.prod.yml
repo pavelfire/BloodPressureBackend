@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bp
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: bloodpressure
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bp -d bloodpressure"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    restart: unless-stopped
+    expose:
+      - "8080"
+    environment:
+      DATABASE_URL: postgres://bp:${POSTGRES_PASSWORD}@postgres:5432/bloodpressure?sslmode=disable
+      JWT_SECRET: ${JWT_SECRET}
+      PORT: "8080"
+      CORS_ORIGIN: "*"
+      VIRTUAL_HOST: api.pressure.eletmed.ru
+      VIRTUAL_PORT: "8080"
+      LETSENCRYPT_HOST: api.pressure.eletmed.ru
+      LETSENCRYPT_EMAIL: fire_ra@bk.ru
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - default
+      - web
+
+networks:
+  web:
+    external: true
+
+volumes:
+  postgres_data:
