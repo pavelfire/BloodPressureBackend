@@ -33,6 +33,33 @@ Health: `GET /health`
 | `JWT_SECRET` | секрет для access-токенов |
 | `PORT` | порт HTTP (по умолчанию 8080) |
 | `CORS_ORIGIN` | origin для CORS (`*` для разработки) |
+| `POSTGRES_PASSWORD` | пароль PostgreSQL (только prod, `docker-compose.prod.yml`) |
+
+## Production (VPS + nginx-proxy)
+
+На сервере с [jwilder/nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) и Let's Encrypt companion (сеть Docker `web`):
+
+```bash
+cd BloodPressureBackend
+cp .env.example .env
+# Задайте POSTGRES_PASSWORD и JWT_SECRET (openssl rand -hex 32)
+
+docker compose -f docker-compose.prod.yml --env-file .env up -d --build
+curl https://api.pressure.eletmed.ru/health
+```
+
+Ожидаемый ответ: `{"status":"ok"}`.
+
+В Android-приложении укажите URL сервера: `https://api.pressure.eletmed.ru` (без `/api/v1`).
+
+Обновление после изменений в коде:
+
+```bash
+git pull
+docker compose -f docker-compose.prod.yml --env-file .env up -d --build
+```
+
+Файл `.env` с секретами на сервер не коммитить — он в `.gitignore`.
 
 ## API (`/api/v1`)
 
