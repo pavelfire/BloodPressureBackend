@@ -91,9 +91,6 @@ func (s *Service) Delete(ctx context.Context, userID, id string) error {
 func (s *Service) Sync(ctx context.Context, userID string, req SyncRequest) (SyncResponse, error) {
 	mappings := make([]SyncMapping, 0, len(req.Upserts))
 	for _, item := range req.Upserts {
-		if err := validateReading(item.Systolic, item.Diastolic, item.Pulse, item.Note); err != nil {
-			continue
-		}
 		serverID, err := s.repo.UpsertSync(ctx, userID, item)
 		if err != nil {
 			return SyncResponse{}, err

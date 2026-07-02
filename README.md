@@ -35,6 +35,9 @@ curl http://127.0.0.1:4000/health
 | `PORT` | порт HTTP (по умолчанию 8080) |
 | `CORS_ORIGIN` | origin для CORS (`*` для разработки) |
 | `POSTGRES_PASSWORD` | пароль PostgreSQL (только prod, `docker-compose.prod.yml`) |
+| `VIRTUAL_HOST` | домен API для nginx-proxy |
+| `LETSENCRYPT_HOST` | домен для выпуска Let's Encrypt сертификата |
+| `LETSENCRYPT_EMAIL` | email для Let's Encrypt уведомлений |
 
 ## Production (VPS + nginx-proxy)
 
@@ -43,7 +46,8 @@ curl http://127.0.0.1:4000/health
 ```bash
 cd BloodPressureBackend
 cp .env.example .env
-# Задайте POSTGRES_PASSWORD и JWT_SECRET (openssl rand -hex 32)
+# Задайте POSTGRES_PASSWORD, JWT_SECRET (openssl rand -hex 32),
+# VIRTUAL_HOST, LETSENCRYPT_HOST и LETSENCRYPT_EMAIL
 
 docker compose -f docker-compose.prod.yml --env-file .env up -d --build
 docker compose -f docker-compose.prod.yml exec api wget -qO- http://localhost:8080/health

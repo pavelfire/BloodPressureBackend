@@ -24,10 +24,10 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       PORT: "8080"
       CORS_ORIGIN: "*"
-      VIRTUAL_HOST: apibp.eletmed.ru
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
       VIRTUAL_PORT: "8080"
-      LETSENCRYPT_HOST: apibp.eletmed.ru
-      LETSENCRYPT_EMAIL: fire_ra@bk.ru
+      LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
     depends_on:
       postgres:
         condition: service_healthy
