@@ -24,9 +24,9 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       PORT: "8080"
       CORS_ORIGIN: "*"
-      VIRTUAL_HOST: api.pressure.eletmed.ru
+      VIRTUAL_HOST: apibp.eletmed.ru
       VIRTUAL_PORT: "8080"
-      LETSENCRYPT_HOST: api.pressure.eletmed.ru
+      LETSENCRYPT_HOST: apibp.eletmed.ru
       LETSENCRYPT_EMAIL: fire_ra@bk.ru
     depends_on:
       postgres:
