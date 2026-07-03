@@ -41,9 +41,26 @@ curl http://127.0.0.1:4000/health
 
 ## Production (VPS + nginx-proxy)
 
+### Deploy path на VPS
+
+На production-сервере проект лежит не в `~/BloodPressureBackend`, а в:
+
+```
+/opt/bloodpressure-api/BloodPressureBackend
+```
+
+Проверка:
+
+```bash
+ls /opt/bloodpressure-api/BloodPressureBackend/docker-compose.prod.yml
+```
+
 На сервере с [jwilder/nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) и Let's Encrypt companion (сеть Docker `web`):
 
 ```bash
+mkdir -p /opt/bloodpressure-api
+cd /opt/bloodpressure-api
+git clone https://github.com/pavelfire/BloodPressureBackend.git
 cd BloodPressureBackend
 cp .env.example .env
 # Задайте POSTGRES_PASSWORD, JWT_SECRET (openssl rand -hex 32),
@@ -61,6 +78,7 @@ curl https://apibp.eletmed.ru/health
 Обновление после изменений в коде:
 
 ```bash
+cd /opt/bloodpressure-api/BloodPressureBackend
 git pull
 docker compose -f docker-compose.prod.yml --env-file .env up -d --build
 ```
